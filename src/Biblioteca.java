@@ -8,11 +8,8 @@ public class Biblioteca {
     public static int menu(String[] opcions, String missatgeEscollirOpcio) {
 
         for (int i=0; i<opcions.length; i++){
-
             imprimir(opcions[i]);
-
         }
-
         imprimir(missatgeEscollirOpcio);
 
     }
