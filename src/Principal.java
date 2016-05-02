@@ -13,8 +13,15 @@ public class Principal {
 				"Consultar usuari",
 				"Mostrar usuaris",			// Mostra nomes usuaris valids. Camps: Nom, Cognoms, email
 				"Modificar usuari",
-				"Borrar usuari"
+				"Borrar usuari",
+				"Sortir"
 		};
+		final int EXIT_OPTION = opcionsMenu.length;
+
+		int opcio = -1;
+		while (opcio != EXIT_OPTION) {
+			opcio = Biblioteca.menu(opcionsMenu, "Escull una opció: ");
+		}
     }
 }
 
