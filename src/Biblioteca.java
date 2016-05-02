@@ -12,11 +12,8 @@ public class Biblioteca {
         int opcio;
 
         for (int i=0; i<opcions.length; i++){
-
             imprimir(opcions[i]);
-
         }
-
         imprimir(missatgeEscollirOpcio);
         opcio = llegirEnter("Introdueix una opció: ");
 
