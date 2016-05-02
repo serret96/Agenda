@@ -7,5 +7,6 @@ public class FileIO {
     public static Usuari getUsuari(String fitxer, String idUsuari);
     public static Usuari[] getUsuaris(String fitxer);
     public static boolean guardarUsuari(String fitxer, Usuari usuari);
+    public static boolean borrarUsuari(String fitxer, String idUsuari);
 
 }
