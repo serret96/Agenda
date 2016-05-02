@@ -9,4 +9,5 @@ public class FileIO {
     public static boolean guardarUsuari(String fitxer, Usuari usuari);
     public static boolean borrarUsuari(String fitxer, String idUsuari);
 
+
 }
