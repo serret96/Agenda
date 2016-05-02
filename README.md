@@ -1,9 +1,9 @@
 # Programa Agenda
 
 # Teoria
-Anàlisi
+####Anàlisi
 
-Disseny
+####Disseny
   - Disseny funcional
   - Disseny interficies
   - Disseny estructura
@@ -11,7 +11,7 @@ Disseny
     - Funcions
     - Interficie
     
-Implementació
+####Implementació
   - Implementacio
   - Proves
   - Integrar
