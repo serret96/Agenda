@@ -10,8 +10,9 @@ public class Biblioteca {
 
         int opcio;
 
-        for (int i=0; i<opcions.length; i++){
-            imprimir(opcions[i]);
+        for (int i=0; i<opcions.length; i++) {
+            if (i < 10) imprimir(" ");
+            imprimirln(i + "." + opcions[i]);
         }
         opcio = llegirEnter(missatgeEscollirOpcio);
 
