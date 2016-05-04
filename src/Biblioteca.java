@@ -12,7 +12,7 @@ public class Biblioteca {
 
         for (int i=0; i<opcions.length; i++) {
             if ((i+1) < 10) imprimir(" ");
-            imprimirln((i+1) + "." + opcions[i]);
+            imprimirln((i+1) + ". " + opcions[i]);
         }
         opcio = llegirEnter(missatgeEscollirOpcio);
 
