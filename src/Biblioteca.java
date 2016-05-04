@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.*;
 /**
  * Created by RUBEN el gayolo on 02/05/2016.
  */
@@ -14,8 +13,7 @@ public class Biblioteca {
         for (int i=0; i<opcions.length; i++){
             imprimir(opcions[i]);
         }
-        imprimir(missatgeEscollirOpcio);
-        opcio = llegirEnter("Introdueix una opció: ");
+        opcio = llegirEnter(missatgeEscollirOpcio);
 
         return opcio;
 
