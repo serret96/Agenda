@@ -24,7 +24,7 @@ public class Usuari {
     public void setNom(String nom){Usuari.nom = nom;}
     public void setCognoms(String cognoms){Usuari.cognoms = cognoms;}
     public void setEmail(String email){Usuari.email = email;}
-    private String generarContrasenya();
+    //private String generarContrasenya();
 
     /* Constructors */
     public Usuari (boolean Valorvalid, String Valorid, String Valorcontrasenya, String Valornom, String Valorcognoms, String Valoremail){
@@ -41,6 +41,6 @@ public class Usuari {
         cognoms = Valorcognoms;
         email = Valoremail;
     }
-    contrasenya = generarContrasenya();
+    //contrasenya = generarContrasenya();
 
 }
