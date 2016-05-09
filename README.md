@@ -49,3 +49,5 @@ Atributs (variables):
 (valid = true; id = generarId(); contrasenya = generarContrasenya();)*///
 #####Mètodes:
 	implementar getters i setters publics per a tots els atributs.
+
+##Disseny Funcional
