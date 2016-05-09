@@ -5,8 +5,9 @@ import java.io.File;
 public class FileIO {
 
     public static String[] getIdUsuaris(String fitxer){
-        File fin = new File(fitxer );
-        return ;
+        File fin = new File(fitxer);
+
+        return Usuari.id;
     }
     public static Usuari getUsuari(String fitxer, String idUsuari){
         File fin = new File(fitxer);
@@ -18,10 +19,12 @@ public class FileIO {
     }
     public static boolean guardarUsuari(String fitxer, Usuari usuari){
         File fin = new File(fitxer);
+        boolean resultat;
         return ;
     }
     public static boolean borrarUsuari(String fitxer, String idUsuari){
         File fin = new File(fitxer);
+        Boolean resultat;
         return ;
     }
 
