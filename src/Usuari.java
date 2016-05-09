@@ -2,6 +2,7 @@
  * Created by RUBEN on 02/05/2016.
  */
 public class Usuari {
+    /* Variables */
     private static boolean valid;
     private static String id;
     private static String contrasenya;
@@ -9,6 +10,8 @@ public class Usuari {
     private static String cognoms;
     private static String email;
 
+
+    /* Mètodes */
     public boolean getValid(){return valid;}
     public String getId(){return id;}
     public String getContrasenya(){return contrasenya;}
@@ -22,5 +25,14 @@ public class Usuari {
     public void setCognoms(String cognoms){Usuari.cognoms = cognoms;}
     public void setEmail(String email){Usuari.email = email;}
     //private String generarContrasenya();
+
+    /* Constructors */
+    public Usuari (boolean valid, String id, String contrasenya, String nom, String cognoms, String email){
+
+    }
+    public Usuari (String id, String nom, String cognoms, String email){
+        
+    }
+    //contrasenya = generarContrasenya();
 
 }
