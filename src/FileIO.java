@@ -26,6 +26,7 @@ public class FileIO {
         File fin = new File(fitxer);
         Boolean resultat;
         return ;
+
     }
 
 
