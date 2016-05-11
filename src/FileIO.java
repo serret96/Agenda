@@ -5,7 +5,6 @@ import java.util.Scanner;
  * Created by RUBEN on 02/05/2016.
  */
 public class FileIO {
-     Usuari usuari = new Usuari();
 
     public static ArrayList<String> getIdUsuaris(String fitxer) {
         ArrayList<String> ids = new ArrayList<>();
@@ -18,7 +17,9 @@ public class FileIO {
                 String linia = sc.nextLine();
                 ids.add(linia.split(";")[1]);
             }
+            sc.close();
         }
+
         catch (Exception e){
             Biblioteca.imprimir("No s'ha trobat cap document");
         }
@@ -45,14 +46,18 @@ public class FileIO {
                 Usuari user = new Usuari(valid, u[1], u[2], u[3], u[4], u[5]);
                 usuaris.add(user);
             }
+            sc.close();
         }
         catch (Exception e){
+            Biblioteca.imprimir("No s'ha trobat cap document");
         }
         return usuaris;
     }
 
-    public static boolean guardarUsuari(String fitxer, Usuari usuari) {
+    public static boolean guardarUsuaris (String fitxer, ArrayList<Usuari> usuaris) {
         File fin = new File(fitxer);
+
+
         return resultatguardat();
     }
 
