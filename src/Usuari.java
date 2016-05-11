@@ -3,12 +3,12 @@
  */
 public class Usuari {
     /* ---------- VARIABLES ----------- */
-    private static boolean valid;
-    private static String id;
-    private static String contrasenya;
-    private static String nom;
-    private static String cognoms;
-    private static String email;
+    private boolean valid;
+    private String id;
+    private String contrasenya;
+    private String nom;
+    private String cognoms;
+    private String email;
 
 
     /* ---------- MÈTODES ----------- */
