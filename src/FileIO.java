@@ -8,13 +8,21 @@ public class FileIO {
      Usuari usuari = new Usuari();
 
     public static ArrayList<String> getIdUsuaris(String fitxer) {
-        File fin = new File(fitxer);
-        Scanner sc = new Scanner(fin);
         ArrayList<String> ids = new ArrayList<>();
-        while(sc.hasNextLine()){
-            String linia = sc.nextLine();
-            ids.add(linia.split(";")[1]);
+        try {
+            File fin = new File(fitxer);
+            Scanner sc = new Scanner(fin);
+
+
+            while (sc.hasNextLine()) {
+                String linia = sc.nextLine();
+                ids.add(linia.split(";")[1]);
+            }
         }
+        catch (Exception e){
+            Biblioteca.imprimir("No s'ha trobat cap document");
+        }
+
          return ids;
     }
 
@@ -24,16 +32,23 @@ public class FileIO {
     }
 
     public static ArrayList<Usuari> getUsuaris(String fitxer) {
-        File fin = new File(fitxer);
-        Scanner sc = new Scanner(fin);
-        ArrayList<String> usuaris = new ArrayList<>();
-        while(sc.hasNextLine()){
-            String linia = sc.nextLine();
-            String[] u = linia.split(";");
-            Usuari user = new Usuari(u[0], u[1], u[2], u[3], u[4], u[5]);
-            usuaris.add(user);
+        ArrayList<Usuari> usuaris = new ArrayList<>();
+        try{
+
+            File fin = new File(fitxer);
+            Scanner sc = new Scanner(fin);
+
+            while(sc.hasNextLine()) {
+                String linia = sc.nextLine();
+                String[] u = linia.split(";");
+                boolean valid = u[0].equals("true");
+                Usuari user = new Usuari(valid, u[1], u[2], u[3], u[4], u[5]);
+                usuaris.add(user);
+            }
         }
-        return Usuari;
+        catch (Exception e){
+        }
+        return usuaris;
     }
 
     public static boolean guardarUsuari(String fitxer, Usuari usuari) {
