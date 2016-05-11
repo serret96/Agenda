@@ -16,11 +16,7 @@ public class Principal {
 	/* CONSTRUCTOR */
 	public Principal() {
 		/* Carregar des del fitxer els usuaris */
-		usuaris = new ArrayList<Usuari>();
-		Usuari[] aux = FileIO.getUsuaris(AGENDA);
-		for (int i = 0; i < aux.length; i++) {
-			usuaris.add(aux[i]);
-		}
+		usuaris = FileIO.getUsuaris(AGENDA);
 	}
 
     public void inici() {
@@ -70,11 +66,11 @@ public class Principal {
 		String idUsuari = "" + nom.charAt(0);
 		idUsuari += cognom.substring(0, cognom.indexOf(' '));
 		idUsuari += 1;
-		String[] idUsuaris = FileIO.getIdUsuaris(AGENDA);
+		ArrayList<String> idUsuaris = FileIO.getIdUsuaris(AGENDA);
 		boolean idCorrecte = false;
 		int i = 0, n = 2;
 		while (!idCorrecte) {
-			if (idUsuari.equals(idUsuaris[i])) {
+			if (idUsuari.equals(idUsuaris.get(i))) {
 				idUsuari += idUsuari.substring(0, idUsuari.length()-1);
 				idUsuari += n;
 				n++;
@@ -83,7 +79,8 @@ public class Principal {
 			i++;
 			if (i == idUsuari.length()) idCorrecte = true;
 		}
-		Usuari newUser = new Usuari(idUsuari, contrasenya, nom, cognom, email);
+		Usuari newUser = new Usuari(idUsuari, nom, cognom, email);
+		usuaris.add(newUser);
 	}
 
 	private void consultarUsuari() {
@@ -93,11 +90,13 @@ public class Principal {
 
 	private void mostrarUsuaris() {
 		String[] titols = {"Id", "Nom", "Email"};
-		String[][] contingut = new String[usuaris.length][titols.length];
-		for (int i = 0; i < usuaris.length; i++) {
-			contingut[i][0] = usuaris[i].getId();
-			contingut[i][1] = usuaris[i].getNom() + " " + usuaris[i].getCognoms();
-			contingut[i][2] = usuaris[i].getEmail();
+		String[][] contingut = new String[usuaris.size()][titols.length];
+		Usuari user;
+		for (int i = 0; i < usuaris.size(); i++) {
+			user = usuaris.get(i);
+			contingut[i][0] = user.getId();
+			contingut[i][1] = user.getNom() + " " + user.getCognoms();
+			contingut[i][2] = user.getEmail();
 		}
 		Biblioteca.imprimirTaula(titols, contingut);
 	}
@@ -117,6 +116,7 @@ public class Principal {
 	}
 
 	private void exit() {
+		FileIO.guardarUsuaris(AGENDA, usuaris);
 		System.exit(0);
 	}
 }
