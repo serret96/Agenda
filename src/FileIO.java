@@ -29,7 +29,7 @@ public class FileIO {
 
     public static Usuari getUsuari(String fitxer, String idUsuari) {
         File fin = new File(fitxer);
-        return;
+        return null;
     }
 
     public static ArrayList<Usuari> getUsuaris(String fitxer) {
