@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -5,11 +6,22 @@ import java.util.Scanner;
  */
 
 public class Principal {
-	private String agenda = "agenda.txt";
+	private final String AGENDA = "../dades/agenda.txt";		// Ruta del fitxer on es guarda l'agenda
+	private ArrayList<Usuari> usuaris;							// Array amb els usuaris de l'agenda
 
     public static void main(String[] args) {
         new Principal().inici();
     }
+
+	/* CONSTRUCTOR */
+	public Principal() {
+		/* Carregar des del fitxer els usuaris */
+		usuaris = new ArrayList<Usuari>();
+		Usuari[] aux = FileIO.getUsuaris(AGENDA);
+		for (int i = 0; i < aux.length; i++) {
+			usuaris.add(aux[i]);
+		}
+	}
 
     public void inici() {
         String[] opcionsMenu = {
@@ -48,16 +60,38 @@ public class Principal {
 		}
     }
 
+	/**
+	 * Insereix un usuari a l'agenda
+	 */
 	private void inserirUsuari() {
-
+		String nom = Biblioteca.llegirLinia("Nom: ");
+		String cognom = Biblioteca.llegirLinia("Cognoms: ");
+		String email = Biblioteca.llegirLinia("Email: ");
+		String idUsuari = "" + nom.charAt(0);
+		idUsuari += cognom.substring(0, cognom.indexOf(' '));
+		idUsuari += 1;
+		String[] idUsuaris = FileIO.getIdUsuaris(AGENDA);
+		boolean idCorrecte = false;
+		int i = 0, n = 2;
+		while (!idCorrecte) {
+			if (idUsuari.equals(idUsuaris[i])) {
+				idUsuari += idUsuari.substring(0, idUsuari.length()-1);
+				idUsuari += n;
+				n++;
+				i = 0;
+			}
+			i++;
+			if (i == idUsuari.length()) idCorrecte = true;
+		}
+		Usuari newUser = new Usuari(idUsuari, contrasenya, nom, cognom, email);
 	}
 
 	private void consultarUsuari() {
+		String busqueda = Biblioteca.llegirLinia("Buscar: ");
 
 	}
 
 	private void mostrarUsuaris() {
-		Usuari[] usuaris = FileIO.getUsuaris(agenda);
 		String[] titols = {"Id", "Nom", "Email"};
 		String[][] contingut = new String[usuaris.length][titols.length];
 		for (int i = 0; i < usuaris.length; i++) {
