@@ -6,7 +6,8 @@ import java.util.Scanner;
  */
 
 public class Principal {
-	private final String AGENDA = "..\\..\\..\\dades\\agenda.txt";		// Ruta del fitxer on es guarda l'agenda
+	//private final String AGENDA = "../../../dades/agenda.txt";		// Ruta del fitxer on es guarda l'agenda
+	private final String AGENDA = "dades/agenda.txt";		// Ruta del fitxer on es guarda l'agenda
 	private ArrayList<Usuari> usuaris;							// Array amb els usuaris de l'agenda
 
     public static void main(String[] args) {
