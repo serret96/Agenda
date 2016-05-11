@@ -21,7 +21,7 @@ public class FileIO {
         }
 
         catch (Exception e){
-            Biblioteca.imprimirln("No s'ha trobat cap document");
+            Biblioteca.imprimirln("Error: " + e);
         }
 
          return ids;
@@ -49,7 +49,7 @@ public class FileIO {
             sc.close();
         }
         catch (Exception e){
-            Biblioteca.imprimirln("No s'ha trobat cap document");
+            Biblioteca.imprimirln("Error: " + e);
         }
         return usuaris;
     }
