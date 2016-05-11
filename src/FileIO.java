@@ -37,6 +37,8 @@ public class FileIO {
         try{
 
             File fin = new File(fitxer);
+
+            Biblioteca.imprimirln(fin.getAbsolutePath());
             Scanner sc = new Scanner(fin);
 
             while(sc.hasNextLine()) {
