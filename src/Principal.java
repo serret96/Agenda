@@ -84,13 +84,14 @@ public class Principal {
 		else
 			idUsuari += cognom;
 		idUsuari += 1;
-		ArrayList<String> idUsuaris = FileIO.getIdUsuaris(AGENDA);
+		idUsuari = idUsuari.toLowerCase();
+		ArrayList<String> idUsuaris = getIdUsuaris();
 		boolean idCorrecte = false;
 		if (idUsuaris.size() == 0) idCorrecte = true;
 		int i = 0, n = 2;
 		while (!idCorrecte) {
 			if (idUsuari.equals(idUsuaris.get(i))) {
-				idUsuari += idUsuari.substring(0, idUsuari.length()-1);
+				idUsuari = idUsuari.substring(0, idUsuari.length()-1);
 				idUsuari += n;
 				n++;
 				i = 0;
@@ -106,19 +107,39 @@ public class Principal {
 	private void consultarUsuari() {
 		String busqueda = Biblioteca.llegirLinia("Buscar: ");
 		busqueda = busqueda.trim();
-		ArrayList<Usuari> coincidencia = new ArrayList<>();
+		ArrayList<Usuari> coincidencies = new ArrayList<>();
 		for (Usuari u : usuaris) {
 			if (u.getValid()) {
 				if (busqueda.equalsIgnoreCase(u.getId()) ||
 					busqueda.equalsIgnoreCase(u.getNom()) ||
 					busqueda.equalsIgnoreCase(u.getCognoms()) ||
 					busqueda.equalsIgnoreCase(u.getEmail())) {
-					coincidencia.add(u);
+					coincidencies.add(u);
 				}
 			}
 		}
 
-		String[] escollirUsuari;
+		if (coincidencies.size() == 0) {
+			Biblioteca.imprimirln("No s'han trobat coincidencies.");
+			return;
+		}
+
+		String[] escollirUsuari = new String[coincidencies.size()];
+		Usuari u;
+		for (int i = 0; i < escollirUsuari.length; i++) {
+			u = coincidencies.get(i);
+			escollirUsuari[i] = u.getId() + " - " + u.getNom() + " " + u.getCognoms();
+		}
+		int opcio = Biblioteca.menu(escollirUsuari, "Escollir un usuari: ");
+		u = coincidencies.get(opcio-1);
+
+		String[] titols = {"Id", "Contrasenya", "Nom", "Email"};
+		String[][] contingut = new String[1][titols.length];
+		contingut[0][0] = u.getId();
+		contingut[0][1] = u.getContrasenya();
+		contingut[0][2] = u.getNom() + " " + u.getCognoms();
+		contingut[0][3] = u.getEmail();
+		Biblioteca.imprimirTaula(titols, contingut);
 	}
 
 	private void mostrarUsuaris() {
@@ -131,9 +152,11 @@ public class Principal {
 		Usuari user;
 		for (int i = 0; i < usuaris.size(); i++) {
 			user = usuaris.get(i);
-			contingut[i][0] = user.getId();
-			contingut[i][1] = user.getNom() + " " + user.getCognoms();
-			contingut[i][2] = user.getEmail();
+			if (user.getValid()) {
+				contingut[i][0] = user.getId();
+				contingut[i][1] = user.getNom() + " " + user.getCognoms();
+				contingut[i][2] = user.getEmail();
+			}
 		}
 		Biblioteca.imprimirTaula(titols, contingut);
 	}
@@ -155,6 +178,14 @@ public class Principal {
 	private void exit() {
 		FileIO.guardarUsuaris(AGENDA, usuaris);
 		System.exit(0);
+	}
+
+	private ArrayList<String> getIdUsuaris() {
+		ArrayList<String> ids = new ArrayList<>();
+		for (Usuari u : usuaris) {
+			ids.add(u.getId());
+		}
+		return ids;
 	}
 }
 
