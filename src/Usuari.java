@@ -40,6 +40,7 @@ public class Usuari {
         nom = Valornom;
         cognoms = Valorcognoms;
         email = Valoremail;
+        valid=true;
     }
     //contrasenya = generarContrasenya();
 
