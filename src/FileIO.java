@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 /**
@@ -27,11 +28,6 @@ public class FileIO {
          return ids;
     }
 
-    public static Usuari getUsuari(String fitxer, String idUsuari) {
-        File fin = new File(fitxer);
-        return null;
-    }
-
     public static ArrayList<Usuari> getUsuaris(String fitxer) {
         ArrayList<Usuari> usuaris = new ArrayList<>();
         try{
@@ -57,25 +53,19 @@ public class FileIO {
     }
 
     public static boolean guardarUsuaris (String fitxer, ArrayList<Usuari> usuaris) {
-        File fin = new File(fitxer);
+        try {
+            File fin = new File(fitxer);
+            PrintStream escriure = new PrintStream(fitxer);
+            String usuari;
+            for (Usuari u:  usuaris) {
+                usuari = u.getValid() + ";" + u.getId() + ";" + u.getContrasenya() + ";" + u.getNom() + ";" + u.getCognoms() + ";" + u.getEmail();
+                escriure.println(usuari);
+            }
+        } catch (Exception e) {
+            Biblioteca.imprimirln("Error :" + e);
+            return false;
+        }
 
-
-        return resultatguardat();
-    }
-
-    public static boolean borrarUsuari(String fitxer, String idUsuari) {
-        File fin = new File(fitxer);
-        return resultatborrat();
-    }
-    public static boolean resultatguardat(){
-    boolean resultat = true;
-
-
-    return resultat;
-}
-    public static boolean resultatborrat(){
-     boolean resultat = true;
-
-        return resultat;
+        return true;
     }
 }
