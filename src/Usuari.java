@@ -40,7 +40,7 @@ public class Usuari {
             int randomNum = 0 + (int)(Math.random() * 3);
 
             if(randomNum==0){
-                int numero = 0 + (int)(Math.random() * 10);
+                int numero = 0 + (int)(Math.random() * 9);
                 pass[i] = Integer.toString(numero);
             }
             if(randomNum==1){
@@ -64,17 +64,17 @@ public class Usuari {
             }
         }
         if(!trobar_num){
-            int random_num = 0 + (int)(Math.random() * 10);
-            int random_pos = 0 + (int)(Math.random() * 9);
+            int random_num = 0 + (int)(Math.random() * 9);
+            int random_pos = 0 + (int)(Math.random() * 8);
             pass[random_pos] = Integer.toString(random_num);
         }
         if(!trobar_min){
-            int random_pos = 0 + (int)(Math.random() * 9);
+            int random_pos = 0 + (int)(Math.random() * 8);
             int random_minuscula = 1 + (int)(Math.random() * minuscula.length-1);
             pass[random_pos] = minuscula[random_minuscula];
         }
         if(!trobar_maj){
-            int random_pos = 0 + (int)(Math.random() * 9);
+            int random_pos = 0 + (int)(Math.random() * 8);
             int random_majuscula = 1 + (int)(Math.random() * majuscula.length-1);
             pass[random_pos] = majuscula[random_majuscula];
 
