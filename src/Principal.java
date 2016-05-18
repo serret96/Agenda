@@ -10,8 +10,7 @@ import java.util.Scanner;
 public class Principal {
 	//private final String AGENDA = "../../../dades/agenda.txt";		// Ruta del fitxer on es guarda l'agenda
 	private final String AGENDA = "dades/agenda.txt";		// Ruta del fitxer on es guarda l'agenda
-	private ArrayList<Usuari> usuaris;							// Array amb els usuaris de l'agenda
-	private Comparator<Usuari> comparadorUsuaris;
+	private ArrayList<Usuari> usuaris;						// Array amb els usuaris de l'agenda
 
     public static void main(String[] args) {
         new Principal().inici();
@@ -21,14 +20,6 @@ public class Principal {
 	public Principal() {
 		/* Carregar des del fitxer els usuaris */
 		usuaris = FileIO.getUsuaris(AGENDA);
-		comparadorUsuaris = new Comparator<Usuari>() {
-			@Override
-			public int compare(Usuari u1, Usuari u2) {
-				String name1 = (u1.getNom() + " " + u1.getCognoms()).trim();
-				String name2 = (u2.getNom() + " " + u2.getCognoms()).trim();
-				return name1.compareToIgnoreCase(name2);
-			}
-		};
 	}
 
     public void inici() {
@@ -52,7 +43,8 @@ public class Principal {
 					inserirUsuari();
 					break;
 				case 2:
-					consultarUsuari();
+					Usuari u = buscarUsuari();
+					consultarUsuari(u);
 					break;
 				case 3:
 					mostrarUsuaris();
@@ -66,7 +58,7 @@ public class Principal {
 			}
 
 			if (opcio != EXIT_OPTION) pause();
-			else exit();
+			else saveAndExit();
 		}
     }
 
@@ -112,10 +104,21 @@ public class Principal {
 		/* Crear i afegir l'usuari */
 		Usuari newUser = new Usuari(true, idUsuari, contrasenya, nom, cognom, email);
 		usuaris.add(newUser);
-		usuaris.sort(comparadorUsuaris);
+		usuaris.sort(new Comparator<Usuari>() {
+			@Override
+			public int compare(Usuari u1, Usuari u2) {
+				String name1 = (u1.getNom() + " " + u1.getCognoms()).trim();
+				String name2 = (u2.getNom() + " " + u2.getCognoms()).trim();
+				return name1.compareToIgnoreCase(name2);
+			}
+		});
 	}
 
-	private void consultarUsuari() {
+	/**
+	 * Busca un usuari a l'agenda
+	 * @return l'usuari buscat. 'Null' si no en troba cap.
+	 */
+	private Usuari buscarUsuari() {
 		String busqueda;
 		do {
 			busqueda = Biblioteca.llegirLinia("Buscar: ");
@@ -134,16 +137,15 @@ public class Principal {
 			}
 		}
 
-		/* Si no hi ha cap coincidencia torna al menu */
+		/* Si no hi ha cap coincidencia retorna 'null' */
 		if (coincidencies.size() == 0) {
 			Biblioteca.imprimirln("No s'han trobat coincidencies.");
-			return;
+			return null;
 		}
 
-		/* Si només hi ha una coincidència mostra-la directament */
+		/* Si només hi ha una coincidència la retorna directament */
 		if (coincidencies.size() == 1) {
-			consultarUsuari(coincidencies.get(0));
-			return;
+			return coincidencies.get(0);
 		}
 
 		/* En cas de trobar diverses coincidencies mostra un menú per escollir l'usuari desitjat */
@@ -156,9 +158,13 @@ public class Principal {
 		int opcio = Biblioteca.menu(escollirUsuari, "Escollir un usuari: ");
 		u = coincidencies.get(opcio-1);
 
-		consultarUsuari(u);
+		return u;
 	}
 
+	/**
+	 * Mostra les dades d'un usuari
+	 * @param u l'usuari a consultar
+	 */
 	private void consultarUsuari(Usuari u) {
 		String[] titols = {"Id", "Contrasenya", "Nom", "Email"};
 		String[][] contingut = new String[1][titols.length];
@@ -171,13 +177,18 @@ public class Principal {
 		Biblioteca.imprimirTaula(titols, contingut);
 	}
 
+	/**
+	 * Mostra tots els usuaris de l'agenda
+	 */
 	private void mostrarUsuaris() {
 		if (usuaris.size() == 0) {
 			Biblioteca.imprimirln("No hi ha usuaris.");
 			return;
 		}
+
 		String[] titols = {"Id", "Nom", "Email"};
 		String[][] contingut = new String[usuaris.size()][titols.length];
+
 		Usuari user;
 		for (int i = 0; i < usuaris.size(); i++) {
 			user = usuaris.get(i);
@@ -187,6 +198,7 @@ public class Principal {
 				contingut[i][2] = user.getEmail();
 			}
 		}
+
 		Biblioteca.imprimirTaula(titols, contingut);
 		Biblioteca.imprimirln("\nTotal: " + contingut.length);
 	}
@@ -199,6 +211,9 @@ public class Principal {
 
 	}
 
+	/**
+	 * Realitza una pausa en l'execució del programa
+	 */
 	private void pause() {
 		Scanner sc = new Scanner(System.in);
 		Biblioteca.imprimir("\nPrèmer enter <-' per continuar...");
@@ -206,7 +221,11 @@ public class Principal {
 		Biblioteca.imprimirln();
 	}
 
-	private void exit() {
+	/**
+	 * Guarda les modificacions de l'agenda en el fitxer
+	 * i finalitza l'execució del programa
+	 */
+	private void saveAndExit() {
 		if (FileIO.guardarUsuaris(AGENDA, usuaris))
 			Biblioteca.imprimirln("L'agenda s'ha guardat correctament.");
 		else
@@ -214,6 +233,10 @@ public class Principal {
 		System.exit(0);
 	}
 
+	/**
+	 * Obté un array amb els identificadors dels usuaris.
+	 * @return els idenditificadors dels usuaris
+	 */
 	private ArrayList<String> getIdUsuaris() {
 		ArrayList<String> ids = new ArrayList<>();
 		for (Usuari u : usuaris) {
@@ -222,6 +245,12 @@ public class Principal {
 		return ids;
 	}
 
+	/**
+	 * Genera un identifiador únic per a l'usuari
+	 * @param nom nom de l'usuari
+	 * @param cognoms cognoms de l'usuari
+	 * @return un identificador únic
+	 */
 	private String generarIdUsuari(String nom, String cognoms) {
 		/* Validar arguments */
 		if (nom == null) nom = "";
@@ -278,11 +307,16 @@ public class Principal {
 		return idUsuari;
 	}
 
+	/**
+	 * Genera una contrasenya aleatoria
+	 * @return una contrasenya
+	 */
 	private String generarContrasenya() {
 		final int NUM_DIGITS = 8;
+		// values: caràcters amb els quals ha d'estar formada la contrasenya
 		final String values = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		int maj = 0, min = 0, num = 0;	// Comptadors de majúscules, minúscules i números
 		char c;
-		int maj = 0, min = 0, num = 0;
 
 		String contrasenya;
 		Random r = new Random();
