@@ -1,0 +1,5 @@
+true;eoliver2;w25wevtk;Eric;Oliver;eoliver@gmail.com
+true;eoliver1;hlGmG4ve;Eric;Oliver Obiol;eric@gmail.com
+true;jcasanova1;6x96qL9P;Jezabel;Casanova Salvadó;jeza@gmail.com
+true;ooliver1;JPSe05Vg;Oscar;Oliver;oscar@gmail.com
+true;xcifuentes1;ymvv7bYF;Ximo;Cifuentes;ximo@gmail.com

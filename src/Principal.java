@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -10,6 +11,7 @@ public class Principal {
 	//private final String AGENDA = "../../../dades/agenda.txt";		// Ruta del fitxer on es guarda l'agenda
 	private final String AGENDA = "dades/agenda.txt";		// Ruta del fitxer on es guarda l'agenda
 	private ArrayList<Usuari> usuaris;							// Array amb els usuaris de l'agenda
+	private Comparator<Usuari> comparadorUsuaris;
 
     public static void main(String[] args) {
         new Principal().inici();
@@ -19,6 +21,14 @@ public class Principal {
 	public Principal() {
 		/* Carregar des del fitxer els usuaris */
 		usuaris = FileIO.getUsuaris(AGENDA);
+		comparadorUsuaris = new Comparator<Usuari>() {
+			@Override
+			public int compare(Usuari u1, Usuari u2) {
+				String name1 = (u1.getNom() + " " + u1.getCognoms()).trim();
+				String name2 = (u2.getNom() + " " + u2.getCognoms()).trim();
+				return name1.compareToIgnoreCase(name2);
+			}
+		};
 	}
 
     public void inici() {
@@ -28,13 +38,15 @@ public class Principal {
 				"Mostrar usuaris",			// Mostra nomes usuaris valids. Camps: Nom, Cognoms, email
 				"Modificar usuari",
 				"Borrar usuari",
-				"Sortir"
+				"Guardar i sortir"
 		};
 		final int EXIT_OPTION = opcionsMenu.length;
 
 		int opcio = -1;
 		while (opcio != EXIT_OPTION) {
 			opcio = Biblioteca.menu(opcionsMenu, "Escull una opció: ");
+			Biblioteca.imprimirln();
+
 			switch (opcio) {
 				case 1:
 					inserirUsuari();
@@ -89,36 +101,52 @@ public class Principal {
 				Biblioteca.imprimirln("No pot contenir el caracter ';'");
 		} while (email.indexOf(';') != -1);
 
+		/* Generar un id i una contrasenya per a l'usuari */
 		String idUsuari = generarIdUsuari(nom, cognom);
 		String contrasenya = generarContrasenya();
 
+		/* Mostrar el id de l'usuari i contrasenya generats */
 		Biblioteca.imprimirln("Id usuari:   " + idUsuari);
 		Biblioteca.imprimirln("Contrasenya: " + contrasenya);
 
+		/* Crear i afegir l'usuari */
 		Usuari newUser = new Usuari(true, idUsuari, contrasenya, nom, cognom, email);
 		usuaris.add(newUser);
+		usuaris.sort(comparadorUsuaris);
 	}
 
 	private void consultarUsuari() {
-		String busqueda = Biblioteca.llegirLinia("Buscar: ");
-		busqueda = busqueda.trim();
+		String busqueda;
+		do {
+			busqueda = Biblioteca.llegirLinia("Buscar: ");
+			busqueda = busqueda.trim();
+		} while (busqueda.equals(""));
+
 		ArrayList<Usuari> coincidencies = new ArrayList<>();
 		for (Usuari u : usuaris) {
 			if (u.getValid()) {
-				if (busqueda.equalsIgnoreCase(u.getId()) ||
-					busqueda.equalsIgnoreCase(u.getNom()) ||
-					busqueda.equalsIgnoreCase(u.getCognoms()) ||
-					busqueda.equalsIgnoreCase(u.getEmail())) {
+				if (u.getId().contains(busqueda) ||
+					u.getNom().contains(busqueda) ||
+					u.getCognoms().contains(busqueda) ||
+					u.getEmail().contains(busqueda)) {
 					coincidencies.add(u);
 				}
 			}
 		}
 
+		/* Si no hi ha cap coincidencia torna al menu */
 		if (coincidencies.size() == 0) {
 			Biblioteca.imprimirln("No s'han trobat coincidencies.");
 			return;
 		}
 
+		/* Si només hi ha una coincidència mostra-la directament */
+		if (coincidencies.size() == 1) {
+			consultarUsuari(coincidencies.get(0));
+			return;
+		}
+
+		/* En cas de trobar diverses coincidencies mostra un menú per escollir l'usuari desitjat */
 		String[] escollirUsuari = new String[coincidencies.size()];
 		Usuari u;
 		for (int i = 0; i < escollirUsuari.length; i++) {
@@ -160,6 +188,7 @@ public class Principal {
 			}
 		}
 		Biblioteca.imprimirTaula(titols, contingut);
+		Biblioteca.imprimirln("\nTotal: " + contingut.length);
 	}
 
 	private void modificarUsuari() {
@@ -172,12 +201,16 @@ public class Principal {
 
 	private void pause() {
 		Scanner sc = new Scanner(System.in);
-		Biblioteca.imprimir("Prèmer enter <-' per continuar...");
+		Biblioteca.imprimir("\nPrèmer enter <-' per continuar...");
 		sc.nextLine();
+		Biblioteca.imprimirln();
 	}
 
 	private void exit() {
-		FileIO.guardarUsuaris(AGENDA, usuaris);
+		if (FileIO.guardarUsuaris(AGENDA, usuaris))
+			Biblioteca.imprimirln("L'agenda s'ha guardat correctament.");
+		else
+			Biblioteca.imprimirln("Error: no s'ha pogut guardar l'agenda.");
 		System.exit(0);
 	}
 
