@@ -61,14 +61,32 @@ public class Principal {
 	 * Insereix un usuari a l'agenda
 	 */
 	private void inserirUsuari() {
-		String nom = Biblioteca.llegirLinia("Nom: ");
-		String cognom = Biblioteca.llegirLinia("Cognoms: ");
-		String email = Biblioteca.llegirLinia("Email: ");
+		String nom, cognom, email;
+		do {
+			nom = Biblioteca.llegirLinia("Nom: ");
+			if (nom.indexOf(';') != -1)
+				Biblioteca.imprimirln("No pot contenir el caracter ';'");
+		} while (nom.indexOf(';') != -1);
+		do {
+			cognom = Biblioteca.llegirLinia("Cognoms: ");
+			if (cognom.indexOf(';') != -1)
+				Biblioteca.imprimirln("No pot contenir el caracter ';'");
+		} while (cognom.indexOf(';') != -1);
+		do {
+			email = Biblioteca.llegirLinia("Email: ");
+			if (email.indexOf(';') != -1)
+				Biblioteca.imprimirln("No pot contenir el caracter ';'");
+		} while (email.indexOf(';') != -1);
 		String idUsuari = "" + nom.charAt(0);
-		idUsuari += cognom.substring(0, cognom.indexOf(' '));
+		int posEspai = cognom.indexOf(' ');
+		if (posEspai != -1)
+			idUsuari += cognom.substring(0, cognom.indexOf(' '));
+		else
+			idUsuari += cognom;
 		idUsuari += 1;
 		ArrayList<String> idUsuaris = FileIO.getIdUsuaris(AGENDA);
 		boolean idCorrecte = false;
+		if (idUsuaris.size() == 0) idCorrecte = true;
 		int i = 0, n = 2;
 		while (!idCorrecte) {
 			if (idUsuari.equals(idUsuaris.get(i))) {
@@ -78,18 +96,36 @@ public class Principal {
 				i = 0;
 			}
 			i++;
-			if (i == idUsuari.length()) idCorrecte = true;
+			if (i == idUsuaris.size()) idCorrecte = true;
 		}
+		idUsuari = idUsuari.toLowerCase();
 		Usuari newUser = new Usuari(idUsuari, nom, cognom, email);
 		usuaris.add(newUser);
 	}
 
 	private void consultarUsuari() {
 		String busqueda = Biblioteca.llegirLinia("Buscar: ");
+		busqueda = busqueda.trim();
+		ArrayList<Usuari> coincidencia = new ArrayList<>();
+		for (Usuari u : usuaris) {
+			if (u.getValid()) {
+				if (busqueda.equalsIgnoreCase(u.getId()) ||
+					busqueda.equalsIgnoreCase(u.getNom()) ||
+					busqueda.equalsIgnoreCase(u.getCognoms()) ||
+					busqueda.equalsIgnoreCase(u.getEmail())) {
+					coincidencia.add(u);
+				}
+			}
+		}
 
+		String[] escollirUsuari;
 	}
 
 	private void mostrarUsuaris() {
+		if (usuaris.size() == 0) {
+			Biblioteca.imprimirln("No hi ha usuaris.");
+			return;
+		}
 		String[] titols = {"Id", "Nom", "Email"};
 		String[][] contingut = new String[usuaris.size()][titols.length];
 		Usuari user;
