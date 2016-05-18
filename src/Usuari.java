@@ -43,5 +43,6 @@ public class Usuari {
         valid=true;
     }
     //contrasenya = generarContrasenya();
+    //Ruben tard
 
 }
