@@ -40,16 +40,20 @@ public class Principal {
 				Biblioteca.imprimirln();
 
 				switch (opcio) {
+					/* Inserir un usuari */
 					case 1:
 						inserirUsuari();
 						break;
+					/* Consultar les dades d'un usuari */
 					case 2:
 						Usuari u1 = buscarUsuari();
 						consultarUsuari(u1);
 						break;
+					/* Mostrar tots els usuaris */
 					case 3:
 						mostrarUsuaris();
 						break;
+					/* Eliminar un usuari */
 					case 4:
 						Usuari u2 = buscarUsuari();
 						eliminarUsuari(u2);
