@@ -27,38 +27,42 @@ public class Principal {
 				"Inserir usuari",
 				"Consultar usuari",
 				"Mostrar usuaris",			// Mostra nomes usuaris valids. Camps: Nom, Cognoms, email
-				"Modificar usuari",
 				"Borrar usuari",
 				"Guardar i sortir"
 		};
 		final int EXIT_OPTION = opcionsMenu.length;
 
 		int opcio = -1;
+
 		while (opcio != EXIT_OPTION) {
-			opcio = Biblioteca.menu(opcionsMenu, "Escull una opció: ");
-			Biblioteca.imprimirln();
+			try {
+				opcio = Biblioteca.menu(opcionsMenu, "Escull una opció: ");
+				Biblioteca.imprimirln();
 
-			switch (opcio) {
-				case 1:
-					inserirUsuari();
-					break;
-				case 2:
-					Usuari u = buscarUsuari();
-					consultarUsuari(u);
-					break;
-				case 3:
-					mostrarUsuaris();
-					break;
-				case 4:
-					modificarUsuari();
-					break;
-				case 5:
-					eliminarUsuari();
-					break;
+				switch (opcio) {
+					case 1:
+						inserirUsuari();
+						break;
+					case 2:
+						Usuari u1 = buscarUsuari();
+						consultarUsuari(u1);
+						break;
+					case 3:
+						mostrarUsuaris();
+						break;
+					case 4:
+						Usuari u2 = buscarUsuari();
+						eliminarUsuari(u2);
+						break;
+				}
+
+				if (opcio != EXIT_OPTION) pause();
+				else saveAndExit();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				Biblioteca.imprimirln("S'ha produït un error inesperat. Disculpeu les molesties.");
 			}
-
-			if (opcio != EXIT_OPTION) pause();
-			else saveAndExit();
 		}
     }
 
@@ -185,17 +189,23 @@ public class Principal {
 	 * Mostra tots els usuaris de l'agenda
 	 */
 	private void mostrarUsuaris() {
-		if (usuaris.size() == 0) {
+		ArrayList<Usuari> usuarisValids = new ArrayList<>();
+		for (Usuari u : usuaris) {
+			if (u.getValid())
+				usuarisValids.add(u);
+		}
+
+		if (usuarisValids.size() == 0) {
 			Biblioteca.imprimirln("No hi ha usuaris.");
 			return;
 		}
 
 		String[] titols = {"Id", "Nom", "Email"};
-		String[][] contingut = new String[usuaris.size()][titols.length];
+		String[][] contingut = new String[usuarisValids.size()][titols.length];
 
 		Usuari user;
-		for (int i = 0; i < usuaris.size(); i++) {
-			user = usuaris.get(i);
+		for (int i = 0; i < usuarisValids.size(); i++) {
+			user = usuarisValids.get(i);
 			if (user.getValid()) {
 				contingut[i][0] = user.getId();
 				contingut[i][1] = (user.getNom() + " " + user.getCognoms()).trim();
@@ -207,12 +217,30 @@ public class Principal {
 		Biblioteca.imprimirln("\nTotal: " + contingut.length);
 	}
 
-	private void modificarUsuari() {
+	/**
+	 * Elimina un usuari de l'agenda
+	 * @param u l'usuari a eliminar
+	 */
+	private void eliminarUsuari(Usuari u) {
+		if (u == null) return;
 
-	}
+		String opcio;
+		boolean eliminar = false;
+		do {
+			opcio = Biblioteca.llegirLinia("Segur que desitja eliminar l'usuari '" + u.getId() + "' [S/n]: ");
+			opcio = opcio.trim().toLowerCase();
+			if (opcio.equals("s") || opcio.equals("si") || opcio.equals(""))
+				eliminar = true;
+			else if (opcio.equals("n") || opcio.equals("no"))
+				eliminar = false;
+			else
+				opcio = null;
+		} while (opcio == null);
 
-	private void eliminarUsuari() {
-
+		if (eliminar) {
+			u.setValid(false);
+			Biblioteca.imprimirln("S'ha eliminat l'usuari: " + u.getId());
+		}
 	}
 
 	/**
