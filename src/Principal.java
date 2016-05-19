@@ -139,7 +139,6 @@ public class Principal {
 
 		/* Si no hi ha cap coincidencia retorna 'null' */
 		if (coincidencies.size() == 0) {
-			Biblioteca.imprimirln("No s'han trobat coincidencies.");
 			return null;
 		}
 
@@ -166,6 +165,11 @@ public class Principal {
 	 * @param u l'usuari a consultar
 	 */
 	private void consultarUsuari(Usuari u) {
+		if (u == null) {
+			Biblioteca.imprimirln("No s'han trobat coincidencies.");
+			return;
+		}
+
 		String[] titols = {"Id", "Contrasenya", "Nom", "Email"};
 		String[][] contingut = new String[1][titols.length];
 
