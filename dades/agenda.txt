@@ -1,5 +1,8 @@
-false;eoliver2;w25wevtk;Eric;Oliver;eoliver@gmail.com
+false;chale1;dhdBzH5V;;chale;dsfd
+true;eoliver2;w25wevtk;Eric;Oliver;eoliver@gmail.com
 true;eoliver1;hlGmG4ve;Eric;Oliver Obiol;eric@gmail.com
+true;jcubedo1;o2sLqn7V;jasmina;cubedo soler;jasminacubedo@iesmontsia.org
 true;jcasanova1;6x96qL9P;Jezabel;Casanova Salvadó;jeza@gmail.com
-false;ooliver1;JPSe05Vg;Oscar;Oliver;oscar@gmail.com
-true;xcifuentes1;ymvv7bYF;Ximo;Cifuentes;ximo@gmail.com
+true;joel11;ZAeiQ9ul;joel1;;
+true;joel12;d31aDhl9;joel1;;
+true;joel191;XhznZT9d;joel19;;

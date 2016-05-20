@@ -57,7 +57,7 @@ public class FileIO {
             File fin = new File(fitxer);
             PrintStream escriure = new PrintStream(fitxer);
             String usuari;
-            for (Usuari u:  usuaris) {
+            for (Usuari u : usuaris) {
                 usuari = u.getValid() + ";" + u.getId() + ";" + u.getContrasenya() + ";" + u.getNom() + ";" + u.getCognoms() + ";" + u.getEmail();
                 escriure.println(usuari);
             }
