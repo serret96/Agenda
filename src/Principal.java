@@ -4,7 +4,39 @@ import java.util.Random;
 import java.util.Scanner;
 
 /**
- * Created by Oscar on 02/05/2016.
+ * Programa:	Agenda
+ *
+ * Autors:		Ruben Serret, Jesús López, Jose Febrer, Oscar Oliver
+ * Professor:	Carles Añó
+ * Data final:	30/05/2016
+ * Data inici:	02/05/2016
+ * Versió:		1.03
+ *
+ * Algorisme:
+ * Bucle principal amb el menú d'opcions:
+ * 		> Inserir usuari:
+ * 			- Demanar les dades de l’usuari.
+ * 			- Generar id i contrasenya.
+ * 			- Crear l'usuari.
+ * 			- Afegir-lo a la llista.
+ * 		> Consultar un usuari:
+ * 			- Demanar un String a buscar (nom, cognom, email, idUsuari).
+ * 			- Buscar les coincidències.
+ * 			- Si n'hi ha més d'una: Mostrar en la funció menu(...) les
+ * 			  coincidencies per ecollir l’usuari que es vol.
+ * 			- Mostrar les dades de l’usuari escollit.
+ * 		> Mostrar usuaris (mostrarà només tots els usuaris vàlids)
+ * 		> Eliminar usuari:
+ * 			- Demanar un String a buscar (nom, cognom, email, idUsuari).
+ * 			- Buscar les coincidències.
+ * 			- Si n'hi ha més d'una: Mostrar en la funció menu(...) les
+ * 			  coincidencies per ecollir l’usuari que es vol eliminar.
+ * 			- Demanar confirmació per eliminar l'usuari.
+ * 			- Eliminar l'usuari → usuari.setValid(false);
+ * 		> Guardar i sortir:
+ * 			- Guarda la llista en un fitxer.
+ * 			- Tanca l'aplicatiu.
+ *
  */
 
 public class Principal {
