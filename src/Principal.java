@@ -133,6 +133,10 @@ public class Principal {
 				Biblioteca.imprimirln("No pot contenir el caracter ';'");
 		} while (email.indexOf(';') != -1);
 
+		if (nom.equals("")) nom = " ";
+		if (cognom.equals("")) cognom = " ";
+		if (email.equals("")) email = " ";
+
 		/* Generar un id i una contrasenya per a l'usuari */
 		String idUsuari = generarIdUsuari(nom, cognom);
 		String contrasenya = generarContrasenya();
@@ -145,7 +149,6 @@ public class Principal {
 		Usuari newUser = new Usuari(true, idUsuari, contrasenya, nom, cognom, email);
 		usuaris.add(newUser);
 		usuaris.sort(new Comparator<Usuari>() {
-			@Override
 			public int compare(Usuari u1, Usuari u2) {
 				String name1 = (u1.getNom() + " " + u1.getCognoms()).trim();
 				String name2 = (u2.getNom() + " " + u2.getCognoms()).trim();
@@ -415,6 +418,7 @@ public class Principal {
 
 		return contrasenya;
 	}
+
 }
 
 

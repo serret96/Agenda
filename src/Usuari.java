@@ -24,7 +24,7 @@ public class Usuari {
     public void setNom(String Valornom){nom = Valornom;}
     public void setCognoms(String Valorcognoms){cognoms = Valorcognoms;}
     public void setEmail(String Valoremail){email = Valoremail;}
-    private String generarContrasenya(){
+    public static String generarContrasenya(){
         String [] pass = new String [8];
         String[] minuscula = {
                 "a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"
