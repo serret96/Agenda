@@ -7,37 +7,17 @@ import java.util.Scanner;
  */
 public class FileIO {
 
-    public static ArrayList<String> getIdUsuaris(String fitxer) {
-        ArrayList<String> ids = new ArrayList<>();
-        try {
-            File fin = new File(fitxer);
-            Scanner sc = new Scanner(fin);
-
-
-            while (sc.hasNextLine()) {
-                String linia = sc.nextLine();
-                ids.add(linia.split(";")[1]);
-            }
-            sc.close();
-        }
-
-        catch (Exception e){
-            Biblioteca.imprimirln("Error: " + e);
-        }
-
-         return ids;
-    }
 
     public static ArrayList<Usuari> getUsuaris(String fitxer) {
+        /*Serveix per extraure les dades dels usuaris*/
         ArrayList<Usuari> usuaris = new ArrayList<>();
         try{
 
             File fin = new File(fitxer);
-
             Biblioteca.imprimirln(fin.getAbsolutePath());
             Scanner sc = new Scanner(fin);
-
             while(sc.hasNextLine()) {
+
                 String linia = sc.nextLine();
                 String[] u = linia.split(";");
                 boolean valid = u[0].equals("true");
@@ -47,13 +27,15 @@ public class FileIO {
             sc.close();
         }
         catch (Exception e){
-            Biblioteca.imprimirln("Error: " + e);
+            Biblioteca.imprimirln("Error: " + e);   //Misatge error en cas de que no es pugue realitzar la operacio desitjada
         }
         return usuaris;
     }
 
     public static boolean guardarUsuaris (String fitxer, ArrayList<Usuari> usuaris) {
+        /*Serveix per poder guardar els usuaris inserits */
         try {
+
             File fin = new File(fitxer);
             PrintStream escriure = new PrintStream(fitxer);
             String usuari;
@@ -62,7 +44,7 @@ public class FileIO {
                 escriure.println(usuari);
             }
         } catch (Exception e) {
-            Biblioteca.imprimirln("Error :" + e);
+            Biblioteca.imprimirln("Error :" + e);   // Misatge error en cas de que no es pugue realitzar la operacio desitjada
             return false;
         }
 
