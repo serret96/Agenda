@@ -1,5 +1,11 @@
 /**
- * Created by TARDRUBEN on 02/05/2016.
+ * Programa:	Agenda
+ *
+ * Autors:		Ruben Serret, Jesús López, Jose Febrer, Oscar Oliver
+ * Professor:	Carles Añó
+ * Data final:	30/05/2016
+ * Data inici:	02/05/2016
+ * Versió:		1.03
  */
 public class Usuari {
 
