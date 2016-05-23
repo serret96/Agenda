@@ -1,4 +1,10 @@
-true;lopez1;CW3QsP90; ;Lopez; 
-true;oscar1;Kh6h5Cnx;Oscar; ; 
-true;serret1;D4aDI4Xz; ;Serret; 
-true;serret2;4d65w7S5;Serret; ; 
+false;chale1;dhdBzH5V;;chale;dsfd
+true;drakkar1;8afbrzY4; ;drakkar;
+true;eoliver2;w25wevtk;Eric;Oliver;eoliver@gmail.com
+true;eoliver1;hlGmG4ve;Eric;Oliver Obiol;eric@gmail.com
+true;jcubedo1;o2sLqn7V;jasmina;cubedo soler;jasminacubedo@iesmontsia.org
+true;jdrakkar1;GzZbrI5g;jesuset;drakkar;jesus@gmail.com
+true;jcasanova1;6x96qL9P;Jezabel;Casanova Salvadó;jeza@gmail.com
+true;jfebrer1;ELNSg1am;Jose ;febrer;jose@gmail.gg
+true;ruben1;DoawWVE4;ruben; ; 
+true;xeni1;niLqMVp7;xeni; ; 
