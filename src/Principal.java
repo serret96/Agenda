@@ -4,7 +4,6 @@ import java.util.Random;
 import java.util.Scanner;
 
 /**
- * Created by Oscar on 02/05/2016.
  * Programa:	Agenda
  *
  * Autors:		Ruben Serret, Jesús López, Jose Febrer, Oscar Oliver
@@ -108,13 +107,13 @@ public class Principal {
 		/* Demanar dades a l'usuari */
 		do {
 			do {
-				nom = Biblioteca.llegirLinia("Nom: ");
+				nom = Biblioteca.llegirLinia("Nom: ").trim();
 				if (nom.indexOf(';') != -1)
 					Biblioteca.imprimirln("No pot contenir el caracter ';'");
 			} while (nom.indexOf(';') != -1);
 
 			do {
-				cognom = Biblioteca.llegirLinia("Cognoms: ");
+				cognom = Biblioteca.llegirLinia("Cognoms: ").trim();
 				if (cognom.indexOf(';') != -1)
 					Biblioteca.imprimirln("No pot contenir el caracter ';'");
 			} while (cognom.indexOf(';') != -1);
@@ -125,7 +124,7 @@ public class Principal {
 		} while (nom.equals("") && cognom.equals(""));
 
 		do {
-			email = Biblioteca.llegirLinia("Email: ");
+			email = Biblioteca.llegirLinia("Email: ").trim();
 			if (email.indexOf(';') != -1)
 				Biblioteca.imprimirln("No pot contenir el caracter ';'");
 		} while (email.indexOf(';') != -1);
@@ -136,7 +135,7 @@ public class Principal {
 
 		/* Generar un id i una contrasenya per a l'usuari */
 		String idUsuari = generarIdUsuari(nom, cognom);
-		String contrasenya = generarContrasenya();
+		String contrasenya = Usuari.generarContrasenya();
 
 		/* Mostrar el id de l'usuari i contrasenya generats */
 		Biblioteca.imprimirln("Id usuari:   " + idUsuari);
@@ -373,34 +372,6 @@ public class Principal {
 			if (i == idUsuaris.size()) idCorrecte = true;
 		}
 		return idUsuari;
-	}
-
-	/**
-	 * Genera una contrasenya aleatoria
-	 * @return una contrasenya
-	 */
-	private String generarContrasenya() {
-		final int NUM_DIGITS = 8;
-		// values: caràcters amb els quals ha d'estar formada la contrasenya
-		final String values = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-		int maj = 0, min = 0, num = 0;	// Comptadors de majúscules, minúscules i números
-		char c;
-
-		String contrasenya;
-		Random r = new Random();
-
-		do {
-			contrasenya = "";
-			for (int i = 0; i < NUM_DIGITS; i++) {
-				c = values.charAt(r.nextInt(values.length()));
-				if		(c >= 'A' && c <= 'Z') maj++;
-				else if (c >= 'a' && c <= 'z') min++;
-				else if (c >= '0' && c <= '9') num++;
-				contrasenya += c;
-			}
-		} while (maj == 0 || min == 0 || num == 0);
-
-		return contrasenya;
 	}
 
 }

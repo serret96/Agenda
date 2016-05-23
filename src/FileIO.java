@@ -26,7 +26,7 @@ public class FileIO {
             }
             sc.close();
         }
-        catch (Exception e){
+        catch (Exception e) {
             Biblioteca.imprimirln("S'ha creat el fitxer de dades");   //Misatge error en cas de que no es pugue realitzar la operacio desitjada
         }
         return usuaris;
