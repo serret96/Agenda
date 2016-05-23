@@ -4,39 +4,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 /**
- * Programa:	Agenda
- *
- * Autors:		Ruben Serret, Jesús López, Jose Febrer, Oscar Oliver
- * Professor:	Carles Añó
- * Data final:	30/05/2016
- * Data inici:	02/05/2016
- * Versió:		1.03
- *
- * Algorisme:
- * Bucle principal amb el menú d'opcions:
- * 		> Inserir usuari:
- * 			- Demanar les dades de l’usuari.
- * 			- Generar id i contrasenya.
- * 			- Crear l'usuari.
- * 			- Afegir-lo a la llista.
- * 		> Consultar un usuari:
- * 			- Demanar un String a buscar (nom, cognom, email, idUsuari).
- * 			- Buscar les coincidències.
- * 			- Si n'hi ha més d'una: Mostrar en la funció menu(...) les
- * 			  coincidencies per ecollir l’usuari que es vol.
- * 			- Mostrar les dades de l’usuari escollit.
- * 		> Mostrar usuaris (mostrarà només tots els usuaris vàlids)
- * 		> Eliminar usuari:
- * 			- Demanar un String a buscar (nom, cognom, email, idUsuari).
- * 			- Buscar les coincidències.
- * 			- Si n'hi ha més d'una: Mostrar en la funció menu(...) les
- * 			  coincidencies per ecollir l’usuari que es vol eliminar.
- * 			- Demanar confirmació per eliminar l'usuari.
- * 			- Eliminar l'usuari → usuari.setValid(false);
- * 		> Guardar i sortir:
- * 			- Guarda la llista en un fitxer.
- * 			- Tanca l'aplicatiu.
- *
+ * Created by Oscar on 02/05/2016.
  */
 
 public class Principal {
@@ -72,20 +40,16 @@ public class Principal {
 				Biblioteca.imprimirln();
 
 				switch (opcio) {
-					/* Inserir un usuari */
 					case 1:
 						inserirUsuari();
 						break;
-					/* Consultar les dades d'un usuari */
 					case 2:
 						Usuari u1 = buscarUsuari();
 						consultarUsuari(u1);
 						break;
-					/* Mostrar tots els usuaris */
 					case 3:
 						mostrarUsuaris();
 						break;
-					/* Eliminar un usuari */
 					case 4:
 						Usuari u2 = buscarUsuari();
 						eliminarUsuari(u2);
@@ -164,15 +128,14 @@ public class Principal {
 			busqueda = Biblioteca.llegirLinia("Buscar: ");
 			busqueda = busqueda.trim();
 		} while (busqueda.equals(""));
-		busqueda = busqueda.toLowerCase();
 
-		String userStr;
 		ArrayList<Usuari> coincidencies = new ArrayList<>();
 		for (Usuari u : usuaris) {
 			if (u.getValid()) {
-				userStr = u.getId() + " " + u.getNom() + " " + u.getCognoms() + " " + u.getEmail();
-				userStr = userStr.toLowerCase();
-				if (userStr.contains(busqueda)) {
+				if (u.getId().contains(busqueda) ||
+					u.getNom().contains(busqueda) ||
+					u.getCognoms().contains(busqueda) ||
+					u.getEmail().contains(busqueda)) {
 					coincidencies.add(u);
 				}
 			}
@@ -184,9 +147,9 @@ public class Principal {
 		}
 
 		/* Si només hi ha una coincidència la retorna directament */
-		/*if (coincidencies.size() == 1) {
+		if (coincidencies.size() == 1) {
 			return coincidencies.get(0);
-		}*/
+		}
 
 		/* En cas de trobar diverses coincidencies mostra un menú per escollir l'usuari desitjat */
 		String[] escollirUsuari = new String[coincidencies.size()];
@@ -195,7 +158,6 @@ public class Principal {
 			u = coincidencies.get(i);
 			escollirUsuari[i] = u.getId() + " - " + u.getNom() + " " + u.getCognoms();
 		}
-
 		int opcio = Biblioteca.menu(escollirUsuari, "Escollir un usuari: ");
 		u = coincidencies.get(opcio-1);
 
@@ -260,30 +222,19 @@ public class Principal {
 	 * @param u l'usuari a eliminar
 	 */
 	private void eliminarUsuari(Usuari u) {
-		if (u == null) {
-			Biblioteca.imprimirln("No s'han trobat coincidencies.");
-			return;
-		}
+		if (u == null) return;
 
 		String opcio;
 		boolean eliminar = false;
 		do {
 			opcio = Biblioteca.llegirLinia("Segur que desitja eliminar l'usuari '" + u.getId() + "' [S/n]: ");
 			opcio = opcio.trim().toLowerCase();
-			switch (opcio) {
-				case "si":
-				case "s":
-				case "":
-					eliminar = true;
-					break;
-				case "no":
-				case "n":
-					eliminar = false;
-					break;
-				default:
-					opcio = null;
-					break;
-			}
+			if (opcio.equals("s") || opcio.equals("si") || opcio.equals(""))
+				eliminar = true;
+			else if (opcio.equals("n") || opcio.equals("no"))
+				eliminar = false;
+			else
+				opcio = null;
 		} while (opcio == null);
 
 		if (eliminar) {
@@ -395,7 +346,7 @@ public class Principal {
 	private String generarContrasenya() {
 		final int NUM_DIGITS = 8;
 		// values: caràcters amb els quals ha d'estar formada la contrasenya
-		final String values = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz01234567890123456789";
+		final String values = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 		int maj = 0, min = 0, num = 0;	// Comptadors de majúscules, minúscules i números
 		char c;
 
