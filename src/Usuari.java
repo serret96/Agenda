@@ -1,3 +1,5 @@
+import java.util.Random;
+
 /**
  * Programa:	Agenda
  *
@@ -26,7 +28,6 @@ public class Usuari {
         nom = Valornom;
         cognoms = Valorcognoms;
         email = Valoremail;
-
     }
 
     /* ---------- MÈTODES ----------- */
@@ -43,8 +44,26 @@ public class Usuari {
     public void setCognoms(String Valorcognoms){cognoms = Valorcognoms;}
     public void setEmail(String Valoremail){email = Valoremail;}
 
-    /* Funció que genera una contrasenya aleatoria amb com a mínim 1 majúscula, 1 minúscula i 1 número */
-    private String generarContrasenya(){
+    /** Funció que genera una contrasenya aleatoria amb com a
+     * mínim 1 majúscula, 1 minúscula i 1 número */
+    public static String generarContrasenya() {
+        Random r = new Random();
+        String contrasenya;
+        int k = r.nextInt(2);
+        switch (k) {
+            case 0:
+                contrasenya = generarContrasenya1();
+                break;
+            default:
+                contrasenya = generarContrasenya2();
+                break;
+        }
+        return contrasenya;
+
+    }
+
+    /** Funció que genera una contrasenya aleatoria amb com a mínim 1 majúscula, 1 minúscula i 1 número */
+    private static String generarContrasenya1(){
         String [] pass = new String [8];
         String[] minuscula = {
                 "a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"
@@ -80,6 +99,34 @@ public class Usuari {
         for(int i = 0; i<8; i++){
             contrasenya+=pass[i];
         }
+        return contrasenya;
+    }
+
+    /**
+     * Genera una contrasenya aleatoria
+     * @return una contrasenya
+     */
+    private static String generarContrasenya2() {
+        final int NUM_DIGITS = 8;
+        // values: caràcters amb els quals ha d'estar formada la contrasenya
+        final String values = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        int maj = 0, min = 0, num = 0;	// Comptadors de majúscules, minúscules i números
+        char c;
+
+        String contrasenya;
+        Random r = new Random();
+
+        do {
+            contrasenya = "";
+            for (int i = 0; i < NUM_DIGITS; i++) {
+                c = values.charAt(r.nextInt(values.length()));
+                if		(c >= 'A' && c <= 'Z') maj++;
+                else if (c >= 'a' && c <= 'z') min++;
+                else if (c >= '0' && c <= '9') num++;
+                contrasenya += c;
+            }
+        } while (maj == 0 || min == 0 || num == 0);
+
         return contrasenya;
     }
 
