@@ -20,32 +20,49 @@ public class Usuari {
     private String email;           //Variable que guarda el correu dels usuaris
 
 
-    /* ---------- CONSTRUCTORS ----------- */
-    public Usuari (boolean Valorvalid, String Valorid, String Valorcontrasenya, String Valornom, String Valorcognoms, String Valoremail){
-        valid = Valorvalid;
-        id = Valorid;
-        contrasenya = Valorcontrasenya;
-        nom = Valornom;
-        cognoms = Valorcognoms;
-        email = Valoremail;
+    /* ---------- CONSTRUCTOR ----------- */
+    public Usuari (boolean isValid, String idUsuari, String contrasenya, String nom, String cognoms, String email) {
+        this.valid = isValid;
+		this.id = idUsuari;
+		this.contrasenya = contrasenya;
+		this.nom = nom;
+		this.cognoms = cognoms;
+		this.email = email;
     }
 
-    /* ---------- MÈTODES ----------- */
-    public boolean getValid(){return valid;}
-    public String getId(){return id;}
-    public String getContrasenya(){return contrasenya;}
-    public String getNom(){return nom;}
-    public String getCognoms(){return cognoms;}
-    public String getEmail(){return email;}
-    public void setValid(boolean Valorvalid){valid = Valorvalid;}
-    public void setId(String Valorid){id = Valorid;}
-    public void setContrasenya(String Valorcontrasenya){contrasenya = Valorcontrasenya;}
-    public void setNom(String Valornom){nom = Valornom;}
-    public void setCognoms(String Valorcognoms){cognoms = Valorcognoms;}
-    public void setEmail(String Valoremail){email = Valoremail;}
+    /* ---------- GETTERS ----------- */
+    public boolean getValid() { return valid; }
 
-    /** Funció que genera una contrasenya aleatoria amb com a
-     * mínim 1 majúscula, 1 minúscula i 1 número */
+    public String getId() { return id; }
+
+    public String getContrasenya() { return contrasenya; }
+
+    public String getNom() { return nom; }
+
+    public String getCognoms() { return cognoms; }
+
+    public String getEmail() { return email; }
+
+
+	/* ---------- SETTERS ----------- */
+    public void setValid(boolean isValid) { this.valid = isValid; }
+
+    public void setId(String idUsuari) { this.id = idUsuari; }
+
+    public void setContrasenya(String contrasenya) { this.contrasenya = contrasenya; }
+
+    public void setNom(String nom) { this.nom = nom; }
+
+    public void setCognoms(String cognoms) { this.cognoms = cognoms; }
+
+    public void setEmail(String email) { this.email = email; }
+
+    /**
+	 * Funció que retorna una contrasenya aleatoria amb com a
+     * mínim 1 majúscula, 1 minúscula i 1 número.
+	 * Retorna aleatòriament una contrasenya entre dues implementacions
+	 * diferents.
+	 */
     public static String generarContrasenya() {
         Random r = new Random();
         String contrasenya;
@@ -62,7 +79,12 @@ public class Usuari {
 
     }
 
-    /** Funció que genera una contrasenya aleatoria amb com a mínim 1 majúscula, 1 minúscula i 1 número */
+	/**
+	 * Genera una contrasenya aleatòria formada per 8 caràcters
+	 * amb com a mínim 1 majúscula, 1 minúscula i 1 número.
+	 * Implementació Jose.
+	 * @return una contrasenya
+	 */
     private static String generarContrasenya1(){
         String [] pass = new String [8];
         String[] minuscula = {
@@ -103,17 +125,19 @@ public class Usuari {
     }
 
     /**
-     * Genera una contrasenya aleatoria
-     * @return una contrasenya
+     * Genera una contrasenya aleatòria formada per 8 caràcters
+	 * amb com a mínim 1 majúscula, 1 minúscula i 1 número.
+     * Implementació Oscar.
+     * @return una contrasenya aleatòria
      */
     private static String generarContrasenya2() {
-        final int NUM_DIGITS = 8;
+        final int NUM_DIGITS = 8;		// Longitud de la contrasenya
         // values: caràcters amb els quals ha d'estar formada la contrasenya
-        final String values = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        final String values = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz01234567890123456789";
         int maj = 0, min = 0, num = 0;	// Comptadors de majúscules, minúscules i números
-        char c;
+        char c;							// Caràcter a afegir a la contrasenya
 
-        String contrasenya;
+        String contrasenya;				// String on es desa la contrasenya
         Random r = new Random();
 
         do {
